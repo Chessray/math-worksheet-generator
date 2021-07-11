@@ -1,0 +1,3 @@
+rootProject.name = 'math-worksheet-generator'
+
+enableFeaturePreview("VERSION_CATALOGS")

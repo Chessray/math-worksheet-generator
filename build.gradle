@@ -1,0 +1,53 @@
+plugins {
+    id 'application'
+
+    id "com.asarkar.gradle.build-time-tracker" version "3.0.0"
+    id "com.github.ben-manes.versions" version "0.39.0"
+    id "org.owasp.dependencycheck" version "6.2.2"
+}
+
+group 'uk.co.kleindelao.tools'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation      libs.commons.lang3
+    implementation      libs.openpdf
+
+    testImplementation  libs.bundles.junit.jupiter
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(16))
+    }
+}
+
+application {
+    mainClass = 'uk.co.kleindelao.mathworksheets.output.WorksheetGenerator'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { otherIt -> version.toUpperCase().contains(otherIt) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
+dependencyUpdates {
+    resolutionStrategy {
+        componentSelection {
+            all {
+                if (isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)) {
+                    reject('Release candidate')
+                }
+            }
+        }
+    }
+}
