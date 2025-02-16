@@ -5,6 +5,7 @@ import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.iterator;
 import static org.assertj.core.api.InstanceOfAssertFactories.type;
 import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
+import static uk.co.kleindelao.mathworksheets.math.Operator.MINUS;
 import static uk.co.kleindelao.mathworksheets.math.Operator.PLUS;
 import static uk.co.kleindelao.mathworksheets.math.Operator.TO_THE_POWER_OF;
 
@@ -12,6 +13,7 @@ import com.lowagie.text.Cell;
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
+import org.apache.commons.lang3.math.Fraction;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +24,7 @@ public class ExerciseTest {
   class Constructor {
     @Test
     void shouldThrowNullPointerExceptionIfOperatorIsNull() {
-      thenThrownBy(() -> new Exercise(12, 23, 42, null)).isInstanceOf(NullPointerException.class);
+      thenThrownBy(() -> new Exercise<>(12, 23, 42, null)).isInstanceOf(NullPointerException.class);
     }
   }
 
@@ -32,7 +34,7 @@ public class ExerciseTest {
     @EnumSource(names = "TO_THE_POWER_OF", mode = EXCLUDE)
     void shouldReturnSingleParagraphContainingConcatenatedElements(final Operator operator) {
       // Given
-      final var exercise = new Exercise(10, 23, 42, operator);
+      final var exercise = new Exercise<>(10, 23, 42, operator);
 
       // When
       final var exerciseString = exercise.toString();
@@ -46,7 +48,7 @@ public class ExerciseTest {
       @Test
       void shouldReturnSecondOperandAsSuperscript() {
         // Given
-        final var exercise = new Exercise(2, 3, -134, TO_THE_POWER_OF);
+        final var exercise = new Exercise<>(2, 3, -134, TO_THE_POWER_OF);
 
         // When
         final var exerciseString = exercise.toString();
@@ -58,7 +60,7 @@ public class ExerciseTest {
       @Test
       void shouldReturnSixAsSuperscript() {
         // Given
-        final var exercise = new Exercise(1, 2, 6, TO_THE_POWER_OF);
+        final var exercise = new Exercise<>(1, 2, 6, TO_THE_POWER_OF);
 
         // When
         final var exerciseString = exercise.toString();
@@ -74,7 +76,7 @@ public class ExerciseTest {
     @Test
     void shouldReturnCellWithSingleParagraphContainingConcatenatedElements() {
       // Given
-      final var exercise = new Exercise(12, 23, 42, PLUS);
+      final var exercise = new Exercise<>(12, 23, 42, PLUS);
 
       // When
       final var exerciseCell = exercise.toCell();
@@ -93,6 +95,31 @@ public class ExerciseTest {
                       .asInstanceOf(type(Paragraph.class))
                       .extracting(Phrase::getContent)
                       .isEqualTo("12.) 23 + 42\n\n\n\n"));
+    }
+
+    @Test
+    void shouldReturnCellWithReporesentationForFractions() {
+      // Given
+      final var exercise = new Exercise<>(2, Fraction.getFraction(1, 2),
+          Fraction.getFraction(5, 3), MINUS);
+
+      // When
+      final var exerciseCell = exercise.toCell();
+
+      // Then
+      then(exerciseCell)
+          .isNotNull()
+          .extracting(Cell::getElements)
+          .asInstanceOf(iterator(Element.class))
+          .toIterable()
+          .hasSize(1)
+          .allSatisfy(
+              element ->
+                  then(element)
+                      .isInstanceOf(Paragraph.class)
+                      .asInstanceOf(type(Paragraph.class))
+                      .extracting(Phrase::getContent)
+                      .isEqualTo("2.) 1/2 - 5/3\n\n\n\n"));
     }
   }
 }
