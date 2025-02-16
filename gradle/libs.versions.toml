@@ -1,5 +1,5 @@
 [versions]
-assertJ = "3.20.2"
+assertJ = "3.27.3"
 commonsLang3 = "3.17.0"
 junitJupiter = "5.7.2"
 openpdf = "1.4.2"
