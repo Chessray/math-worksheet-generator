@@ -5,36 +5,34 @@ import static uk.co.kleindelao.mathworksheets.math.Operator.TO_THE_POWER_OF;
 
 import com.lowagie.text.Cell;
 
-public record Exercise(int index, int firstOperand, int secondOperand, Operator operator) {
+public record Exercise<L extends Number, R extends Number>(int index, L firstOperand, R secondOperand, Operator operator) {
   public Exercise {
     requireNonNull(operator);
   }
 
   private String toPureOperationString() {
     if (operator == TO_THE_POWER_OF) {
-      return String.format("%d%s", firstOperand,superscripted(secondOperand));
+      return String.format("%s%s", firstOperand, superscriptedSecondOperand());
     } else {
-    return String.format("%d %s %d", firstOperand, operator.textualRepresentation, secondOperand);
+    return String.format("%s %s %s", firstOperand, operator.textualRepresentation, secondOperand);
     }
   }
 
-  private String superscripted(final int operand) {
+  private String superscriptedSecondOperand() {
     final var superscriptBuilder = new StringBuilder();
-    appendSuperscriptedMinusIfRequired(superscriptBuilder, operand);
-    appendSuperscriptedDigits(superscriptBuilder, operand);
+    appendSuperscriptedMinusIfSecondOperandIsNegative(superscriptBuilder);
+    appendSecondOperandSuperscriptedDigits(superscriptBuilder);
     return superscriptBuilder.toString();
   }
 
-  private void appendSuperscriptedDigits(final StringBuilder superscriptBuilder,
-                                         final int operand) {
-    for (char digit: String.valueOf(Math.abs(operand)).toCharArray()) {
+  private void appendSecondOperandSuperscriptedDigits(final StringBuilder superscriptBuilder) {
+    for (char digit: String.valueOf(Math.abs(secondOperand.intValue())).toCharArray()) {
       superscriptBuilder.append(superscriptedChar(digit));
     }
   }
 
-  private void appendSuperscriptedMinusIfRequired(final StringBuilder superscriptBuilder,
-                                                  final int operand) {
-    if (operand < 0) {
+  private void appendSuperscriptedMinusIfSecondOperandIsNegative(final StringBuilder superscriptBuilder) {
+    if (secondOperand.intValue() < 0) {
       superscriptBuilder.append('\u207b');
     }
   }
@@ -50,7 +48,7 @@ public record Exercise(int index, int firstOperand, int secondOperand, Operator 
 
   @Override
   public String toString() {
-    System.out.printf("%d.) %d %s %d%n", index, firstOperand, operator.textualRepresentation,
+    System.out.printf("%s.) %s %s %s%n", index, firstOperand, operator.textualRepresentation,
         secondOperand);
     return String.format("%d.) %s\n\n\n\n", index, toPureOperationString());
   }

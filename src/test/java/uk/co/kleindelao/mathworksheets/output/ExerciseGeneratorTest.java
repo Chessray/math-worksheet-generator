@@ -2,7 +2,6 @@ package uk.co.kleindelao.mathworksheets.output;
 
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 import static org.assertj.core.api.BDDAssertions.then;
-import static uk.co.kleindelao.mathworksheets.math.Operator.DIVIDED_BY;
 import static uk.co.kleindelao.mathworksheets.math.Operator.TO_THE_POWER_OF;
 
 import org.apache.commons.lang3.Range;
@@ -31,21 +30,6 @@ class ExerciseGeneratorTest {
   }
 
   @Nested
-  class DividedBy {
-    @Test
-    void shouldCreateExerciseWithoutRemainder() {
-      // Given
-      final var operator = DIVIDED_BY;
-
-      // When
-      final var exercise = generator.create(nextInt(), operator);
-
-      // Then
-      then(exercise.firstOperand() % exercise.secondOperand()).isEqualTo(0);
-    }
-  }
-
-  @Nested
   class ToThePowerOf {
     @Test
     void shouldCreateOnlySingleDigitNaturalOperands() {
@@ -53,7 +37,7 @@ class ExerciseGeneratorTest {
       final var operator = TO_THE_POWER_OF;
 
       // When
-      final var exercise = generator.create(nextInt(), operator);
+      final Exercise<Integer, Integer> exercise = generator.create(nextInt(), operator);
 
       // Then
       final var singleDigitNaturals = Range.between(0, 9);
