@@ -30,8 +30,12 @@ application {
     mainClass = 'uk.co.kleindelao.mathworksheets.output.WorksheetGenerator'
 }
 
-test {
-    useJUnitPlatform()
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+        }
+    }
 }
 
 def isNonStable = { String version ->
