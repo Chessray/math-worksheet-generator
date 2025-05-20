@@ -2,7 +2,7 @@
 assertJ = "3.27.3"
 commonsLang3 = "3.17.0"
 junitJupiter = "5.12.2"
-openpdf = "2.0.3"
+openpdf = "2.0.4"
 
 [libraries]
 assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "assertJ"}
