@@ -1,7 +1,7 @@
 [versions]
 assertJ = "3.27.3"
 commonsLang3 = "3.18.0"
-junitJupiter = "5.13.3"
+junitJupiter = "5.13.4"
 openpdf = "2.2.4"
 
 [libraries]
