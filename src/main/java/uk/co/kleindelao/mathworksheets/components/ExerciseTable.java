@@ -1,6 +1,6 @@
 package uk.co.kleindelao.mathworksheets.components;
 
-import com.lowagie.text.Table;
+import org.openpdf.text.Table;
 
 public final class ExerciseTable extends Table {
   public ExerciseTable() {

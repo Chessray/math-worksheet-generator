@@ -2,8 +2,6 @@ package uk.co.kleindelao.mathworksheets.output;
 
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import org.openpdf.text.Document;
+import org.openpdf.text.pdf.PdfWriter;
 import uk.co.kleindelao.mathworksheets.math.Exercise;
 import uk.co.kleindelao.mathworksheets.math.ExerciseSheet;
 import uk.co.kleindelao.mathworksheets.math.Operator;

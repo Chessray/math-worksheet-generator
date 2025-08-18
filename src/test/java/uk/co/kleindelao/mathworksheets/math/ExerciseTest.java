@@ -9,15 +9,15 @@ import static uk.co.kleindelao.mathworksheets.math.Operator.MINUS;
 import static uk.co.kleindelao.mathworksheets.math.Operator.PLUS;
 import static uk.co.kleindelao.mathworksheets.math.Operator.TO_THE_POWER_OF;
 
-import com.lowagie.text.Cell;
-import com.lowagie.text.Element;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
 import org.apache.commons.lang3.math.Fraction;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.openpdf.text.Cell;
+import org.openpdf.text.Element;
+import org.openpdf.text.Paragraph;
+import org.openpdf.text.Phrase;
 
 public class ExerciseTest {
   @Nested

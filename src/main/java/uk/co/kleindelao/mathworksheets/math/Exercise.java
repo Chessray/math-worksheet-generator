@@ -3,7 +3,8 @@ package uk.co.kleindelao.mathworksheets.math;
 import static java.util.Objects.requireNonNull;
 import static uk.co.kleindelao.mathworksheets.math.Operator.TO_THE_POWER_OF;
 
-import com.lowagie.text.Cell;
+import org.openpdf.text.Cell;
+
 
 public record Exercise<L extends Number, R extends Number>(int index, L firstOperand, R secondOperand, Operator operator) {
   public Exercise {
