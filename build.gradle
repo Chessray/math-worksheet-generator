@@ -3,7 +3,7 @@ plugins {
 
     id "com.asarkar.gradle.build-time-tracker" version "5.0.1"
     id "com.github.ben-manes.versions" version "0.52.0"
-    id "org.owasp.dependencycheck" version "12.1.5"
+    id "org.owasp.dependencycheck" version "12.1.6"
 }
 
 group 'uk.co.kleindelao.tools'
